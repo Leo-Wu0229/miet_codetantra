@@ -1,0 +1,6 @@
+// 1.1.12 understanding keywords.
+
+Ans: A , C
+
+ANSI has 32 reserved words.
+Reserved words has predefined meaning in the system and they are known to the C compilers
