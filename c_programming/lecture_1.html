@@ -63,23 +63,6 @@
             gap: 0.75rem; /* space-x-3 */
             align-items: center;
         }
-
-        /* Force wrapping on buttons for small screens */
-        @media (max-width: 640px) {
-            .solution-nav {
-                flex-wrap: wrap;
-                justify-content: flex-end; /* Align to right */
-            }
-            .solution-nav > * {
-                flex-grow: 1; /* Make buttons grow to fill space */
-                min-width: 100px; /* Ensure buttons don't get too small */
-                margin-top: 0.5rem; /* Add space between wrapped rows */
-            }
-            .solution-nav > a:first-child {
-                 /* Adjust home button wrapping behavior */
-                 flex-grow: 0;
-            }
-        }
     </style>
 </head>
 <body>
@@ -102,14 +85,26 @@
                 </a>
             </div>
 
+            <!-- NEW: Mobile-Only Icon Navigation (Visible < sm) -->
+            <div class="flex sm:hidden solution-nav space-x-2 ml-auto">
+                <!-- Prev Icon Button -->
+                <button id="prev-solution-btn-mobile" onclick="navigateSolution('prev')" disabled class="p-2 bg-yellow-500 text-white rounded-full hover:bg-yellow-600 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                </button>
+                <!-- Next Icon Button -->
+                <button id="next-solution-btn-mobile" onclick="navigateSolution('next')" disabled class="p-2 bg-yellow-500 text-white rounded-full hover:bg-yellow-600 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+
             <!-- Mobile Menu Button (Hamburger) -->
-            <button id="mobile-menu-button" class="sm:hidden p-2 text-gray-600 hover:text-yellow-700 focus:outline-none ml-auto">
+            <button id="mobile-menu-button" class="sm:hidden p-2 text-gray-600 hover:text-yellow-700 focus:outline-none">
                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
                 </svg>
             </button>
             
-            <!-- Desktop/Mobile-Hidden Solution Navigation Buttons (Right) -->
+            <!-- Desktop-Only Full Navigation Buttons (Visible >= sm) -->
             <div class="hidden sm:flex solution-nav">
                 <!-- Previous Button -->
                 <button id="prev-solution-btn" onclick="navigateSolution('prev')" disabled class="px-4 py-2 text-sm bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 flex items-center">
@@ -125,19 +120,8 @@
             </div>
         </div>
 
-        <!-- Mobile Menu Dropdown -->
+        <!-- Mobile Menu Dropdown: Solution Navigation section removed as requested -->
         <nav id="mobile-menu" class="hidden sm:hidden bg-white/95 backdrop-blur-sm pb-4 border-t border-yellow-200">
-            <div class="px-4 space-y-2 pt-2 border-b border-gray-100 pb-3">
-                <p class="text-sm font-bold text-gray-500 uppercase">Solution Navigation:</p>
-                <button id="mobile-prev-solution-btn" onclick="navigateSolution('prev'); closeMobileMenu();" disabled class="w-full text-left px-4 py-2 text-sm bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 flex items-center">
-                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
-                    <span id="mobile-prev-label">Previous</span>
-                </button>
-                <button id="mobile-next-solution-btn" onclick="navigateSolution('next'); closeMobileMenu();" disabled class="w-full text-left px-4 py-2 text-sm bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 flex items-center">
-                    <span id="mobile-next-label" class="flex-grow text-center">Next</span>
-                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
-                </button>
-            </div>
             <div class="px-4 space-y-2 pt-3">
                 <p class="text-sm font-bold text-gray-500 uppercase">Main App Links:</p>
                 <a href="../index.html#home-tab" onclick="closeMobileMenu();" class="block text-base font-medium text-gray-600 hover:text-yellow-700 transition duration-150 ease-in-out w-full py-2 px-4 rounded-lg hover:bg-yellow-100">Home Dashboard</a>
@@ -222,7 +206,7 @@ Linking is done after the compilation process is completed.</code></pre>
                     </div>
                     <div class="code-block">
                         <button onclick="copyCode(this)" class="copy-button absolute top-3 right-3 p-2 bg-gray-600 text-white text-xs font-semibold rounded-full hover:bg-yellow-500">Copy Code</button>
-                        <pre class="whitespace-pre-wrap"><code class="language-c">#include <stdio.h>
+                        <pre class="whitespace-pre-wrap"><code class="language-c">#include &lt;stdio.h&gt;
 int main() {
 printf("I love Mangoes\n");
 return 0;
@@ -296,9 +280,9 @@ int main() {
 
 int main() {
     int x = 10; // Statement 1 ends with semicolon
-    x = x + 5;  // Statement 2 ends with semicolon
+    x = x + 5;  // Statement 2 ends with semicolon
     printf("Result: %d\n", x); // Statement 3 ends with semicolon
-    return 0;   // Statement 4 ends with semicolon
+    return 0;   // Statement 4 ends with semicolon
 }</code></pre>
                     </div>
                 </div>
@@ -515,7 +499,7 @@ int main() {
     
     // Swapping logic using a temporary variable
     temp = P; 
-    P = Q;     
+    P = Q;     
     Q = temp; 
 
     printf("New P: %d\n", P);
@@ -608,23 +592,21 @@ int main() {
             
             // Validate ID against the allowed list
             if (!solutionOrder.includes(id)) {
-                // Show the default message if no valid ID is provided (e.g., just lecture_1.html)
+                // Show the default message if no valid ID is provided
                 document.querySelectorAll('.solution-section').forEach(section => {
                     section.classList.remove('active');
                 });
                 document.getElementById('no-solution-message').classList.add('active');
                 
-                // Disable navigation buttons
+                // Disable all navigation buttons (desktop + new mobile icons)
                 document.getElementById('prev-solution-btn').disabled = true;
                 document.getElementById('next-solution-btn').disabled = true;
-                document.getElementById('mobile-prev-solution-btn').disabled = true;
-                document.getElementById('mobile-next-solution-btn').disabled = true;
+                document.getElementById('prev-solution-btn-mobile').disabled = true;
+                document.getElementById('next-solution-btn-mobile').disabled = true;
                 
-                // Reset labels
+                // Reset desktop labels
                 document.getElementById('prev-label').textContent = 'Previous';
                 document.getElementById('next-label').textContent = 'Next';
-                document.getElementById('mobile-prev-label').textContent = 'Previous';
-                document.getElementById('mobile-next-label').textContent = 'Next';
                 
                 return;
             }
@@ -678,35 +660,45 @@ int main() {
         function updateNavigation() {
             const currentIndex = solutionOrder.indexOf(currentSolutionId);
             
+            // Desktop Buttons (Full labels)
             const prevBtn = document.getElementById('prev-solution-btn');
             const nextBtn = document.getElementById('next-solution-btn');
             const prevLabel = document.getElementById('prev-label');
             const nextLabel = document.getElementById('next-label');
 
-            const mPrevBtn = document.getElementById('mobile-prev-solution-btn');
-            const mNextBtn = document.getElementById('mobile-next-solution-btn');
-            const mPrevLabel = document.getElementById('mobile-prev-label');
-            const mNextLabel = document.getElementById('mobile-next-label');
+            // Mobile Icon Buttons (Icon only)
+            const mPrevIconBtn = document.getElementById('prev-solution-btn-mobile');
+            const mNextIconBtn = document.getElementById('next-solution-btn-mobile');
 
-            // --- Previous Button Logic (Desktop & Mobile) ---
+            // --- Previous Button Logic ---
             const prevEnabled = currentIndex > 0;
             const prevId = prevEnabled ? solutionOrder[currentIndex - 1] : '';
 
-            prevBtn.disabled = !prevEnabled;
-            prevLabel.textContent = prevEnabled ? `Prev (${prevId})` : 'Previous';
+            // Desktop Updates
+            if (prevBtn) {
+                prevBtn.disabled = !prevEnabled;
+                if (prevLabel) prevLabel.textContent = prevEnabled ? `Prev (${prevId})` : 'Previous';
+            }
 
-            mPrevBtn.disabled = !prevEnabled;
-            mPrevLabel.textContent = prevEnabled ? `Prev (${prevId})` : 'Previous';
+            // Mobile Icon Updates (Only enable/disable, no label change)
+            if (mPrevIconBtn) {
+                mPrevIconBtn.disabled = !prevEnabled;
+            }
 
-            // --- Next Button Logic (Desktop & Mobile) ---
+            // --- Next Button Logic ---
             const nextEnabled = currentIndex < solutionOrder.length - 1;
             const nextId = nextEnabled ? solutionOrder[currentIndex + 1] : '';
 
-            nextBtn.disabled = !nextEnabled;
-            nextLabel.textContent = nextEnabled ? `Next (${nextId})` : 'Next';
+            // Desktop Updates
+            if (nextBtn) {
+                nextBtn.disabled = !nextEnabled;
+                if (nextLabel) nextLabel.textContent = nextEnabled ? `Next (${nextId})` : 'Next';
+            }
             
-            mNextBtn.disabled = !nextEnabled;
-            mNextLabel.textContent = nextEnabled ? `Next (${nextId})` : 'Next';
+            // Mobile Icon Updates (Only enable/disable, no label change)
+            if (mNextIconBtn) {
+                mNextIconBtn.disabled = !nextEnabled;
+            }
         }
         
         /**
@@ -747,7 +739,7 @@ int main() {
             }, 1500);
         }
 
-        // --- NEW MOBILE FEATURE: Hamburger Menu Logic ---
+        // --- Hamburger Menu Logic ---
         function toggleMobileMenu() {
             const menu = document.getElementById('mobile-menu');
             menu.classList.toggle('hidden');
@@ -758,7 +750,7 @@ int main() {
             menu.classList.add('hidden');
         }
 
-        // --- NEW MOBILE FEATURE: Scroll to Top Logic ---
+        // --- Scroll to Top Logic ---
         function setupScrollToTopButton() {
             const button = document.getElementById('scroll-to-top');
             if (!button) return;
