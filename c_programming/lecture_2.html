@@ -56,6 +56,31 @@
         .header-shadow {
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
         }
+
+        /* Responsive adjustments for header and navigation */
+        .solution-nav {
+            display: flex;
+            gap: 0.75rem; /* space-x-3 */
+            align-items: center;
+        }
+
+        /* Force wrapping on buttons for small screens */
+        @media (max-width: 640px) {
+            .solution-nav {
+                flex-wrap: wrap;
+                justify-content: flex-end; /* Align to right */
+            }
+            .solution-nav > * {
+                flex-grow: 1; /* Make buttons grow to fill space */
+                min-width: 100px; /* Ensure buttons don't get too small */
+                margin-top: 0.5rem; /* Add space between wrapped rows */
+            }
+            /* Adjust the size of the home/back links on mobile */
+            .header-controls > a {
+                 padding-left: 0.75rem; 
+                 padding-right: 0.75rem;
+            }
+        }
     </style>
 </head>
 <body>
@@ -64,39 +89,67 @@
     <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm transition-all duration-300 header-shadow">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
             
-            <!-- Home Button (Goes to Home Summary Tab) -->
-            <a href="../index.html#home" class="px-4 py-2 bg-yellow-700 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-800 transition duration-150 flex items-center">
-                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-10v10a1 1 0 001 1h3m-3-10l-7-7-7 7m7 7v-1.5"></path></svg>
-                Home
-            </a>
-
-            <!-- Solution Navigation Buttons (Right) -->
-            <div class="flex space-x-3 items-center">
-                
-                <!-- Back Button (Explicitly targets the C Programming Language Tab on the main page) -->
-                <a href="../index.html#c-programming-tab" class="px-4 py-2 text-sm bg-yellow-100 text-yellow-700 font-medium rounded-lg hover:bg-yellow-200 transition duration-150 flex items-center">
-                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                    Back
+            <div class="flex items-center space-x-2 header-controls">
+                <!-- Home Button (Goes to Home Summary Tab) -->
+                <a href="../index.html#home-tab" class="px-3 py-2 text-sm sm:px-4 bg-yellow-700 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-800 transition duration-150 flex items-center">
+                    <svg class="w-5 h-5 mr-0 sm:mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-10v10a1 1 0 001 1h3m-3-10l-7-7-7 7m7 7v-1.5"></path></svg>
+                    <span class="hidden sm:inline">Home</span>
                 </a>
 
+                <!-- Back Button (Explicitly targets the C Programming Language Tab on the main page) -->
+                <a href="../index.html#c-programming-tab" class="px-3 py-2 text-sm sm:px-4 bg-yellow-100 text-yellow-700 font-medium rounded-lg hover:bg-yellow-200 transition duration-150 flex items-center">
+                    <svg class="w-4 h-4 mr-0 sm:mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    <span class="hidden sm:inline">Back to Lectures</span>
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button (Hamburger) -->
+            <button id="mobile-menu-button" class="sm:hidden p-2 text-gray-600 hover:text-yellow-700 focus:outline-none ml-auto">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+            
+            <!-- Desktop/Mobile-Hidden Solution Navigation Buttons (Right) -->
+            <div class="hidden sm:flex solution-nav">
                 <!-- Previous Button -->
-                <button id="prev-solution-btn" onclick="navigateSolution('prev')" disabled class="px-4 py-2 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 flex items-center">
+                <button id="prev-solution-btn" onclick="navigateSolution('prev')" disabled class="px-4 py-2 text-sm bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 flex items-center">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                     <span id="prev-label">Previous</span>
                 </button>
                 
                 <!-- Next Button -->
-                <button id="next-solution-btn" onclick="navigateSolution('next')" disabled class="px-4 py-2 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 flex items-center">
+                <button id="next-solution-btn" onclick="navigateSolution('next')" disabled class="px-4 py-2 text-sm bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 flex items-center">
                     <span id="next-label">Next</span>
                     <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                 </button>
             </div>
         </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <nav id="mobile-menu" class="hidden sm:hidden bg-white/95 backdrop-blur-sm pb-4 border-t border-yellow-200">
+            <div class="px-4 space-y-2 pt-2 border-b border-gray-100 pb-3">
+                <p class="text-sm font-bold text-gray-500 uppercase">Solution Navigation:</p>
+                <button id="mobile-prev-solution-btn" onclick="navigateSolution('prev'); closeMobileMenu();" disabled class="w-full text-left px-4 py-2 text-sm bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    <span id="mobile-prev-label">Previous</span>
+                </button>
+                <button id="mobile-next-solution-btn" onclick="navigateSolution('next'); closeMobileMenu();" disabled class="w-full text-left px-4 py-2 text-sm bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 flex items-center">
+                    <span id="mobile-next-label" class="flex-grow text-center">Next</span>
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+            <div class="px-4 space-y-2 pt-3">
+                <p class="text-sm font-bold text-gray-500 uppercase">Main App Links:</p>
+                <a href="../index.html#home-tab" onclick="closeMobileMenu();" class="block text-base font-medium text-gray-600 hover:text-yellow-700 transition duration-150 ease-in-out w-full py-2 px-4 rounded-lg hover:bg-yellow-100">Home Dashboard</a>
+                <a href="../index.html#future-courses-tab" onclick="closeMobileMenu();" class="block text-base font-medium text-gray-600 hover:text-yellow-700 transition duration-150 ease-in-out w-full py-2 px-4 rounded-lg hover:bg-yellow-100">Future Courses</a>
+            </div>
+        </nav>
     </header>
 
     <!-- Main Content Area -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <h1 class="text-4xl font-extrabold text-gray-800 mb-6 border-b border-yellow-300 pb-2">
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-6 border-b border-yellow-300 pb-2">
             Lecture 2: Syntax of main() and Standard I/O in C
         </h1>
         
@@ -108,7 +161,7 @@
             <!-- Solution 2.1.1: Basic main() signature -->
             <div id="2.1.1" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">2.1.1: Basic `main()` Signature (`int main()`)</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">2.1.1: Basic `main()` Signature (`int main()`)</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Write the most common, minimal C program structure using the `int main()` signature and the standard `return 0;` statement.</p>
@@ -129,7 +182,7 @@ int main() {
             <!-- Solution 2.1.2: main() with arguments -->
             <div id="2.1.2" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">2.1.2: `main()` with Command Line Arguments</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">2.1.2: `main()` with Command Line Arguments</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Demonstrate the standard `int main(int argc, char *argv[])` signature, showing how the arguments are defined even if not used.</p>
@@ -150,7 +203,7 @@ int main(int argc, char *argv[]) {
             <!-- Solution 2.1.3: Void main (Legacy) -->
             <div id="2.1.3" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">2.1.3: Legacy `void main()` Signature</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">2.1.3: Legacy `void main()` Signature</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Illustrate the non-standard but often seen `void main()` declaration. Explain why `int main()` is preferred (in documentation/comments).</p>
@@ -172,7 +225,7 @@ void main() {
             <!-- Solution 2.1.4: Basic printf string -->
             <div id="2.1.4" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">2.1.4: Basic `printf()`: Printing a String</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">2.1.4: Basic `printf()`: Printing a String</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Use `printf()` to output the exact string: "C Language Fundamentals."</p>
@@ -193,7 +246,7 @@ int main() {
             <!-- Solution 2.1.5: printf with newline (\n) -->
             <div id="2.1.5" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">2.1.5: `printf()`: Using Newline (`\n`)</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">2.1.5: `printf()`: Using Newline (`\n`)</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Print two lines of text: "Line One" and "Line Two" using a single `printf()` statement and the newline escape sequence.</p>
@@ -214,7 +267,7 @@ int main() {
             <!-- Solution 2.1.6: printf with tab (\t) -->
             <div id="2.1.6" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">2.1.6: `printf()`: Using Tab (`\t`)</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">2.1.6: `printf()`: Using Tab (`\t`)</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Print two labels, "Name" and "Age," separated by a tab to create horizontal spacing.</p>
@@ -235,7 +288,7 @@ int main() {
             <!-- Solution 2.1.7: printf printing a variable (int) -->
             <div id="2.1.7" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">2.1.7: `printf()`: Printing an Integer Variable</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">2.1.7: `printf()`: Printing an Integer Variable</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Declare an integer variable `score` with a value of 95 and print its value using the correct format specifier.</p>
@@ -258,7 +311,7 @@ int main() {
             <!-- Solution 2.1.8: printf %f (float) -->
             <div id="2.1.8" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">2.1.8: `printf()`: Format Specifier `%f` (Float)</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">2.1.8: `printf()`: Format Specifier `%f` (Float)</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Declare a float variable `pi` (value 3.14159) and print it using the `%f` specifier.</p>
@@ -281,7 +334,7 @@ int main() {
             <!-- Solution 2.1.9: printf %c (char) -->
             <div id="2.1.9" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">2.1.9: `printf()`: Format Specifier `%c` (Character)</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">2.1.9: `printf()`: Format Specifier `%c` (Character)</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Declare a character variable `initial` and print it using the `%c` specifier.</p>
@@ -304,7 +357,7 @@ int main() {
             <!-- Solution 2.1.10: printf %s (string) -->
             <div id="2.1.10" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">2.1.10: `printf()`: Format Specifier `%s` (String)</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">2.1.10: `printf()`: Format Specifier `%s` (String)</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Declare a string array `name` and print it using the `%s` specifier.</p>
@@ -327,7 +380,7 @@ int main() {
             <!-- Solution 2.1.11: printf multiple specifiers -->
             <div id="2.1.11" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">2.1.11: `printf()`: Printing Multiple Variables</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">2.1.11: `printf()`: Printing Multiple Variables</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Print an integer, a float, and a character using a single `printf()` statement, ensuring the order of specifiers matches the variable order.</p>
@@ -353,7 +406,7 @@ int main() {
             <!-- Solution 2.1.12: printf formatting precision (%.2f) -->
             <div id="2.1.12" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">2.1.12: `printf()`: Precision Formatting (`.2f`)</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">2.1.12: `printf()`: Precision Formatting (`.2f`)</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Print a floating-point number (`25.12345`) but restrict the output to exactly two decimal places using the precision modifier.</p>
@@ -376,7 +429,7 @@ int main() {
             <!-- Solution 2.1.13: Basic scanf %d -->
             <div id="2.1.13" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">2.1.13: Basic `scanf()`: Reading an Integer (`%d`)</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">2.1.13: Basic `scanf()`: Reading an Integer (`%d`)</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Use `scanf()` to read a single integer input from the user and print it back. Ensure the ampersand (`&`) is used for the variable.</p>
@@ -401,7 +454,7 @@ int main() {
             <!-- Solution 2.1.14: Basic scanf %f -->
             <div id="2.1.14" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">2.1.14: Basic `scanf()`: Reading a Float (`%f`)</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">2.1.14: Basic `scanf()`: Reading a Float (`%f`)</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Read a single floating-point number (e.g., GPA) from the user using `scanf()` and print it back.</p>
@@ -426,7 +479,7 @@ int main() {
             <!-- Solution 2.1.15: scanf multiple inputs (Space/Enter delimited) -->
             <div id="2.1.15" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">2.1.15: `scanf()`: Reading Multiple Values in One Call</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">2.1.15: `scanf()`: Reading Multiple Values in One Call</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Use a single `scanf()` call to read an integer and a float separated by a space or Enter keypress.</p>
@@ -454,7 +507,7 @@ int main() {
             <!-- Solution 2.1.16: scanf single character %c -->
             <div id="2.1.16" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">2.1.16: `scanf()`: Reading a Single Character (`%c`)</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">2.1.16: `scanf()`: Reading a Single Character (`%c`)</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Read a single character (e.g., user choice 'Y' or 'N') and confirm the input by printing it.</p>
@@ -481,7 +534,7 @@ int main() {
             <!-- Solution 2.1.17: printf field width (%5d) -->
             <div id="2.1.17" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">2.1.17: `printf()`: Field Width Formatting (`%5d`)</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">2.1.17: `printf()`: Field Width Formatting (`%5d`)</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Print the number `123` using a field width of 5, demonstrating right justification (padding with spaces).</p>
@@ -504,7 +557,7 @@ int main() {
             <!-- Solution 2.1.18: printf left justification (%-5d) -->
             <div id="2.1.18" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">2.1.18: `printf()`: Left Justification (`%-5d`)</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">2.1.18: `printf()`: Left Justification (`%-5d`)</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Print the number `45` using a field width of 5, but use the hyphen modifier (`-`) for left justification (padding with spaces after the number).</p>
@@ -527,7 +580,7 @@ int main() {
             <!-- Solution 2.1.19: scanf suppressing input (* modifier) -->
             <div id="2.1.19" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">2.1.19: `scanf()`: Suppressing Input (`%*d`)</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">2.1.19: `scanf()`: Suppressing Input (`%*d`)</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Read three integers, but ignore the second input using the suppression modifier (`*`) and only store and print the first and third integers.</p>
@@ -554,7 +607,7 @@ int main() {
             <!-- Solution 2.1.20: printf and scanf for double (%lf, %f) -->
             <div id="2.1.20" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">2.1.20: I/O for `double` (`%lf` in scanf, `%f` in printf)</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">2.1.20: I/O for `double` (`%lf` in scanf, `%f` in printf)</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Demonstrate reading a `double` using **`%lf`** in `scanf` and printing it using **`%f`** in `printf` (standard practice).</p>
@@ -584,7 +637,7 @@ int main() {
             <!-- Solution 2.2.1: Practice: Mixed Type Input/Output -->
             <div id="2.2.1" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">2.2.1: Practice: Reading Mixed Data Types</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">2.2.1: Practice: Reading Mixed Data Types</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Scenario</h3>
                         <p class="text-gray-600">Accept a character (initial), an integer (age), and a float (height in meters) in that order, and print a formatted summary sentence.</p>
@@ -613,7 +666,7 @@ int main() {
             <!-- Solution 2.2.2: Practice: Simple BMI Calculation -->
             <div id="2.2.2" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">2.2.2: Practice: Simple BMI Calculation</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">2.2.2: Practice: Simple BMI Calculation</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Scenario</h3>
                         <p class="text-gray-600">Read a person's **weight (kg, integer)** and **height (m, float)**. Calculate and print the BMI (BMI = weight / (height * height)), formatted to one decimal place.</p>
@@ -644,7 +697,7 @@ int main() {
             <!-- Solution 2.2.3: Practice: Reading and Formatting Address -->
             <div id="2.2.3" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">2.2.3: Practice: Formatted Address Output</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">2.2.3: Practice: Formatted Address Output</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Scenario</h3>
                         <p class="text-gray-600">Read a **house number (integer)** and a **zip code (integer)**. Print the address information aligned in a fixed format, using field width modifiers for presentation.</p>
@@ -676,6 +729,11 @@ int main() {
 
     </main>
 
+    <!-- Scroll to Top Button (New Mobile Feature) -->
+    <button id="scroll-to-top" class="fixed bottom-5 right-5 z-50 p-3 bg-yellow-500 text-white rounded-full shadow-lg hover:bg-yellow-600 transition duration-300 ease-in-out hidden opacity-0 transition-opacity duration-300">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+    </button>
+
     <!-- Success Message Pop-up for Copy Code -->
     <div id="copy-success-message" class="fixed bottom-5 right-5 bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg transition-all duration-300 transform translate-y-20 opacity-0 z-50">
         Code copied to clipboard!
@@ -706,7 +764,7 @@ int main() {
 
         /**
          * Shows only the solution corresponding to the given hash ID.
-         * Updates the navigation buttons' state.
+         * Updates the navigation buttons' state (Desktop and Mobile).
          * @param {string} hash - The URL hash (e.g., '#2.1.1').
          */
         function showSolution(hash) {
@@ -714,15 +772,18 @@ int main() {
             
             // Validate ID against the allowed list
             if (!solutionOrder.includes(id)) {
-                // Show the default message if no valid ID is provided (e.g., just lecture_2.html)
+                // Show the default message
                 document.querySelectorAll('.solution-section').forEach(section => {
                     section.classList.remove('active');
                 });
                 document.getElementById('no-solution-message').classList.add('active');
                 
-                // Disable navigation buttons
+                // Disable all navigation buttons
                 document.getElementById('prev-solution-btn').disabled = true;
                 document.getElementById('next-solution-btn').disabled = true;
+                document.getElementById('mobile-prev-solution-btn').disabled = true;
+                document.getElementById('mobile-next-solution-btn').disabled = true;
+                
                 return;
             }
 
@@ -774,28 +835,40 @@ int main() {
          */
         function updateNavigation() {
             const currentIndex = solutionOrder.indexOf(currentSolutionId);
+            
+            // Desktop elements
             const prevBtn = document.getElementById('prev-solution-btn');
             const nextBtn = document.getElementById('next-solution-btn');
             const prevLabel = document.getElementById('prev-label');
             const nextLabel = document.getElementById('next-label');
 
-            // --- Previous Button Logic ---
-            if (currentIndex > 0) {
-                prevBtn.disabled = false;
-                prevLabel.textContent = `Prev (${solutionOrder[currentIndex - 1]})`;
-            } else {
-                prevBtn.disabled = true;
-                prevLabel.textContent = 'Previous';
-            }
+            // Mobile elements
+            const mPrevBtn = document.getElementById('mobile-prev-solution-btn');
+            const mNextBtn = document.getElementById('mobile-next-solution-btn');
+            const mPrevLabel = document.getElementById('mobile-prev-label');
+            const mNextLabel = document.getElementById('mobile-next-label');
 
-            // --- Next Button Logic ---
-            if (currentIndex < solutionOrder.length - 1) {
-                nextBtn.disabled = false;
-                nextLabel.textContent = `Next (${solutionOrder[currentIndex + 1]})`;
-            } else {
-                nextBtn.disabled = true;
-                nextLabel.textContent = 'Next';
-            }
+
+            // --- Previous Button Logic (Desktop & Mobile) ---
+            const prevEnabled = currentIndex > 0;
+            const prevId = prevEnabled ? solutionOrder[currentIndex - 1] : '';
+
+            if (prevBtn) prevBtn.disabled = !prevEnabled;
+            if (prevLabel) prevLabel.textContent = prevEnabled ? `Prev (${prevId})` : 'Previous';
+
+            if (mPrevBtn) mPrevBtn.disabled = !prevEnabled;
+            if (mPrevLabel) mPrevLabel.textContent = prevEnabled ? `Prev (${prevId})` : 'Previous';
+
+
+            // --- Next Button Logic (Desktop & Mobile) ---
+            const nextEnabled = currentIndex < solutionOrder.length - 1;
+            const nextId = nextEnabled ? solutionOrder[currentIndex + 1] : '';
+
+            if (nextBtn) nextBtn.disabled = !nextEnabled;
+            if (nextLabel) nextLabel.textContent = nextEnabled ? `Next (${nextId})` : 'Next';
+            
+            if (mNextBtn) mNextBtn.disabled = !nextEnabled;
+            if (mNextLabel) mNextLabel.textContent = nextEnabled ? `Next (${nextId})` : 'Next';
         }
         
         /**
@@ -835,9 +908,50 @@ int main() {
                 message.classList.add('translate-y-20', 'opacity-0');
             }, 1500);
         }
+        
+        // --- NEW MOBILE FEATURE: Hamburger Menu Logic ---
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.add('hidden');
+        }
+
+        // --- NEW MOBILE FEATURE: Scroll to Top Logic ---
+        function setupScrollToTopButton() {
+            const button = document.getElementById('scroll-to-top');
+            if (!button) return;
+
+            window.addEventListener('scroll', () => {
+                if (window.scrollY > 300) { // Show after scrolling 300px
+                    button.classList.remove('hidden');
+                    setTimeout(() => button.classList.add('opacity-100'), 10);
+                } else {
+                    button.classList.remove('opacity-100');
+                    setTimeout(() => button.classList.add('hidden'), 300); // Wait for fade out
+                }
+            });
+
+            button.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+
 
         // --- Initialization ---
         window.onload = function() {
+            // Mobile menu listener
+            document.getElementById('mobile-menu-button')?.addEventListener('click', toggleMobileMenu);
+
+            // Setup scroll to top
+            setupScrollToTopButton();
+            
             // Check for initial hash and show the solution
             showSolution(window.location.hash);
             
