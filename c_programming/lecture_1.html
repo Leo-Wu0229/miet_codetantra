@@ -56,6 +56,30 @@
         .header-shadow {
             box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1);
         }
+
+        /* Responsive adjustments for header and navigation */
+        .solution-nav {
+            display: flex;
+            gap: 0.75rem; /* space-x-3 */
+            align-items: center;
+        }
+
+        /* Force wrapping on buttons for small screens */
+        @media (max-width: 640px) {
+            .solution-nav {
+                flex-wrap: wrap;
+                justify-content: flex-end; /* Align to right */
+            }
+            .solution-nav > * {
+                flex-grow: 1; /* Make buttons grow to fill space */
+                min-width: 100px; /* Ensure buttons don't get too small */
+                margin-top: 0.5rem; /* Add space between wrapped rows */
+            }
+            .solution-nav > a:first-child {
+                 /* Adjust home button wrapping behavior */
+                 flex-grow: 0;
+            }
+        }
     </style>
 </head>
 <body>
@@ -64,39 +88,67 @@
     <header class="sticky top-0 z-50 bg-white/90 backdrop-blur-sm transition-all duration-300 header-shadow">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-3 flex justify-between items-center">
             
-            <!-- Home Button (Goes to Home Summary Tab) -->
-            <a href="../index.html#home" class="px-4 py-2 bg-yellow-700 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-800 transition duration-150 flex items-center">
-                <svg class="w-5 h-5 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-10v10a1 1 0 001 1h3m-3-10l-7-7-7 7m7 7v-1.5"></path></svg>
-                Home
-            </a>
-
-            <!-- Solution Navigation Buttons (Right) -->
-            <div class="flex space-x-3 items-center">
+            <div class="flex items-center space-x-2">
+                 <!-- Home Button -->
+                <a href="../index.html#home-tab" class="px-3 py-2 text-sm sm:px-4 bg-yellow-700 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-800 transition duration-150 flex items-center">
+                    <svg class="w-5 h-5 mr-0 sm:mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-10v10a1 1 0 001 1h3m-3-10l-7-7-7 7m7 7v-1.5"></path></svg>
+                    <span class="hidden sm:inline">Home</span>
+                </a>
                 
                 <!-- Back Button (Explicitly targets the C Programming Language Tab on the main page) -->
-                <a href="../index.html#c-programming-tab" class="px-4 py-2 text-sm bg-yellow-100 text-yellow-700 font-medium rounded-lg hover:bg-yellow-200 transition duration-150 flex items-center">
-                    <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
-                    Back
+                <a href="../index.html#c-programming-tab" class="px-3 py-2 text-sm sm:px-4 bg-yellow-100 text-yellow-700 font-medium rounded-lg hover:bg-yellow-200 transition duration-150 flex items-center">
+                    <svg class="w-4 h-4 mr-0 sm:mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18"></path></svg>
+                    <span class="hidden sm:inline">Back to Lectures</span>
                 </a>
+            </div>
 
+            <!-- Mobile Menu Button (Hamburger) -->
+            <button id="mobile-menu-button" class="sm:hidden p-2 text-gray-600 hover:text-yellow-700 focus:outline-none ml-auto">
+                <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16m-7 6h7"></path>
+                </svg>
+            </button>
+            
+            <!-- Desktop/Mobile-Hidden Solution Navigation Buttons (Right) -->
+            <div class="hidden sm:flex solution-nav">
                 <!-- Previous Button -->
-                <button id="prev-solution-btn" onclick="navigateSolution('prev')" disabled class="px-4 py-2 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 flex items-center">
+                <button id="prev-solution-btn" onclick="navigateSolution('prev')" disabled class="px-4 py-2 text-sm bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 flex items-center">
                     <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
                     <span id="prev-label">Previous</span>
                 </button>
                 
                 <!-- Next Button -->
-                <button id="next-solution-btn" onclick="navigateSolution('next')" disabled class="px-4 py-2 bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 flex items-center">
+                <button id="next-solution-btn" onclick="navigateSolution('next')" disabled class="px-4 py-2 text-sm bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 flex items-center">
                     <span id="next-label">Next</span>
                     <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
                 </button>
             </div>
         </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <nav id="mobile-menu" class="hidden sm:hidden bg-white/95 backdrop-blur-sm pb-4 border-t border-yellow-200">
+            <div class="px-4 space-y-2 pt-2 border-b border-gray-100 pb-3">
+                <p class="text-sm font-bold text-gray-500 uppercase">Solution Navigation:</p>
+                <button id="mobile-prev-solution-btn" onclick="navigateSolution('prev'); closeMobileMenu();" disabled class="w-full text-left px-4 py-2 text-sm bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 flex items-center">
+                    <svg class="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"></path></svg>
+                    <span id="mobile-prev-label">Previous</span>
+                </button>
+                <button id="mobile-next-solution-btn" onclick="navigateSolution('next'); closeMobileMenu();" disabled class="w-full text-left px-4 py-2 text-sm bg-yellow-500 text-white font-semibold rounded-lg shadow-md hover:bg-yellow-600 disabled:opacity-50 disabled:cursor-not-allowed transition duration-150 flex items-center">
+                    <span id="mobile-next-label" class="flex-grow text-center">Next</span>
+                    <svg class="w-4 h-4 ml-2" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"></path></svg>
+                </button>
+            </div>
+            <div class="px-4 space-y-2 pt-3">
+                <p class="text-sm font-bold text-gray-500 uppercase">Main App Links:</p>
+                <a href="../index.html#home-tab" onclick="closeMobileMenu();" class="block text-base font-medium text-gray-600 hover:text-yellow-700 transition duration-150 ease-in-out w-full py-2 px-4 rounded-lg hover:bg-yellow-100">Home Dashboard</a>
+                <a href="../index.html#future-courses-tab" onclick="closeMobileMenu();" class="block text-base font-medium text-gray-600 hover:text-yellow-700 transition duration-150 ease-in-out w-full py-2 px-4 rounded-lg hover:bg-yellow-100">Future Courses</a>
+            </div>
+        </nav>
     </header>
 
     <!-- Main Content Area -->
     <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
-        <h1 class="text-4xl font-extrabold text-gray-800 mb-6 border-b border-yellow-300 pb-2">
+        <h1 class="text-3xl sm:text-4xl font-extrabold text-gray-800 mb-6 border-b border-yellow-300 pb-2">
             Lecture 1: Introduction to C Programming
         </h1>
         
@@ -108,7 +160,7 @@
             <!-- Solution 1.1.1: Single Line Comment -->
             <div id="1.1.1" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">1.1.1: what is a computer programming language?</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">1.1.1: what is a computer programming language?</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">// what is a computer programming language?</p>
@@ -126,7 +178,7 @@ The sequence of instructions (int the form of source code)written in a computer 
             <!-- Solution 1.1.2: Multi-line Comment -->
             <div id="1.1.2" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">1.1.2: The genesis of C</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">1.1.2: The genesis of C</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">//The genesis of C.</p>
@@ -144,7 +196,7 @@ in a C Program, user can write code to perfume low- level operations.</code></pr
             <!-- Solution 1.1.3: Token - Keyword (int, return) -->
             <div id="1.1.3" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">1.1.3: Life of a computer program</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">1.1.3: Life of a computer program</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">//Life of a computer program.</p>
@@ -163,10 +215,10 @@ Linking is done after the compilation process is completed.</code></pre>
             <!-- Solution 1.1.4: Token - Identifier (Variable Naming) -->
             <div id="1.1.4" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">1.1.4: Modifying a  c program</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">1.1.4: Modifying a c program</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
-                        <p class="text-gray-600">//Modifying a  c program.</p>
+                        <p class="text-gray-600">//Modifying a c program.</p>
                     </div>
                     <div class="code-block">
                         <button onclick="copyCode(this)" class="copy-button absolute top-3 right-3 p-2 bg-gray-600 text-white text-xs font-semibold rounded-full hover:bg-yellow-500">Copy Code</button>
@@ -182,7 +234,7 @@ return 0;
             <!-- Solution 1.1.5: Token - Constant (Integer and Float) -->
             <div id="1.1.5" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">1.1.5: Token: Constants (Numeric)</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">1.1.5: Token: Constants (Numeric)</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Demonstrate the use of both **Integer Constants** (`100`) and **Floating-Point Constants** (`3.14159f`) by assigning and printing them.</p>
@@ -207,7 +259,7 @@ int main() {
             <!-- Solution 1.1.6: Token - Constant (Character and String) -->
             <div id="1.1.6" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">1.1.6: Token: Constants (Char & String)</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">1.1.6: Token: Constants (Char & String)</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Illustrate the difference between a **Character Constant** (single quotes) and a **String Literal** (double quotes).</p>
@@ -232,7 +284,7 @@ int main() {
             <!-- Solution 1.1.7: Token - Separator (Semicolon) -->
             <div id="1.1.7" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">1.1.7: Token: Separators (Semicolon)</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">1.1.7: Token: Separators (Semicolon)</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Demonstrate the **semicolon (`;`)** as a crucial separator token used to terminate statements in C.</p>
@@ -255,7 +307,7 @@ int main() {
             <!-- Solution 1.1.8: Token - Separator (Braces) -->
             <div id="1.1.8" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">1.1.8: Token: Separators (Braces { })</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">1.1.8: Token: Separators (Braces { })</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Illustrate the use of **braces (`{ }`)** as separator tokens to define the body of the `main()` function and local scope.</p>
@@ -277,7 +329,7 @@ int main() { // Opening brace defines the function body
             <!-- Solution 1.1.9: Token - Operator (Assignment) -->
             <div id="1.1.9" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">1.1.9: Token: Operator (Assignment =)</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">1.1.9: Token: Operator (Assignment =)</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Demonstrate the **assignment operator (`=`)** token to store a value into a variable.</p>
@@ -302,7 +354,7 @@ int main() {
             <!-- Solution 1.1.10: Token - Operator (Arithmetic) -->
             <div id="1.1.10" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">1.1.10: Token: Operator (Arithmetic +)</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">1.1.10: Token: Operator (Arithmetic +)</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Demonstrate the **arithmetic operator (`+`)** token to perform addition, combining two variables.</p>
@@ -328,7 +380,7 @@ int main() {
             <!-- Solution 1.1.11: Keyword - const (Demonstration) -->
             <div id="1.1.11" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">1.1.11: Keyword: const (Defining Constant)</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">1.1.11: Keyword: const (Defining Constant)</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Use the **keyword `const`** to create a read-only variable (`RATE`), confirming its value cannot be changed later in the program.</p>
@@ -358,7 +410,7 @@ int main() {
             <!-- Solution 1.1.12: Token - Delimiter (Parentheses) -->
             <div id="1.1.12" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">1.1.12: Token: Delimiter (Parentheses ())</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">1.1.12: Token: Delimiter (Parentheses ())</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Problem Statement</h3>
                         <p class="text-gray-600">Illustrate the use of **parentheses (`()`)** as delimiters, specifically when calling the `printf` and `main` functions.</p>
@@ -384,7 +436,7 @@ int main() { // Parentheses define function parameters (none here)
             <!-- Solution 1.2.1: Practice Problem 1: Basic Input/Output -->
             <div id="1.2.1" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">1.2.1: Practice: Read Two Integers and Print Separately</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">1.2.1: Practice: Read Two Integers and Print Separately</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Scenario</h3>
                         <p class="text-gray-600">Write a program to accept two integer values, `X` and `Y`, and print them on two separate lines, labeled clearly.</p>
@@ -413,7 +465,7 @@ int main() {
             <!-- Solution 1.2.2: Practice Problem 2: Basic Arithmetic -->
             <div id="1.2.2" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">1.2.2: Practice: Calculate Quotient and Remainder</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">1.2.2: Practice: Calculate Quotient and Remainder</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Scenario</h3>
                         <p class="text-gray-600">Given two integers, `A` (dividend) and `B` (divisor), calculate and print the integer **quotient** and the **remainder**.</p>
@@ -446,7 +498,7 @@ int main() {
             <!-- Solution 1.2.3: Practice Problem 3: Variable Swap -->
             <div id="1.2.3" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">1.2.3: Practice: Swap Two Variables (Using Temporary)</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">1.2.3: Practice: Swap Two Variables (Using Temporary)</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Scenario</h3>
                         <p class="text-gray-600">Accept two integers, `P` and `Q`. Swap their values using a temporary third variable, and print the new values of `P` and `Q`.</p>
@@ -463,7 +515,7 @@ int main() {
     
     // Swapping logic using a temporary variable
     temp = P; 
-    P = Q;    
+    P = Q;     
     Q = temp; 
 
     printf("New P: %d\n", P);
@@ -478,7 +530,7 @@ int main() {
             <!-- Solution 1.2.4: Practice Problem 4: Simple Average -->
             <div id="1.2.4" class="solution-section">
                 <div class="p-6">
-                    <h2 class="text-3xl font-bold text-yellow-700 mb-4">1.2.4: Practice: Calculate Average of Three Integers</h2>
+                    <h2 class="text-2xl sm:text-3xl font-bold text-yellow-700 mb-4">1.2.4: Practice: Calculate Average of Three Integers</h2>
                     <div class="bg-yellow-50 p-4 rounded-lg mb-4">
                         <h3 class="text-xl font-semibold text-gray-800 mb-2">Scenario</h3>
                         <p class="text-gray-600">Read three integers, calculate their sum, and then determine their average. The average must be printed as a floating-point number (at least one decimal place).</p>
@@ -513,6 +565,11 @@ int main() {
         </div>
 
     </main>
+
+    <!-- Scroll to Top Button (New Mobile Feature) -->
+    <button id="scroll-to-top" class="fixed bottom-5 right-5 z-50 p-3 bg-yellow-500 text-white rounded-full shadow-lg hover:bg-yellow-600 transition duration-300 ease-in-out hidden opacity-0 transition-opacity duration-300">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 10l7-7m0 0l7 7m-7-7v18"></path></svg>
+    </button>
 
     <!-- Success Message Pop-up for Copy Code -->
     <div id="copy-success-message" class="fixed bottom-5 right-5 bg-green-500 text-white px-6 py-3 rounded-xl shadow-lg transition-all duration-300 transform translate-y-20 opacity-0 z-50">
@@ -560,6 +617,15 @@ int main() {
                 // Disable navigation buttons
                 document.getElementById('prev-solution-btn').disabled = true;
                 document.getElementById('next-solution-btn').disabled = true;
+                document.getElementById('mobile-prev-solution-btn').disabled = true;
+                document.getElementById('mobile-next-solution-btn').disabled = true;
+                
+                // Reset labels
+                document.getElementById('prev-label').textContent = 'Previous';
+                document.getElementById('next-label').textContent = 'Next';
+                document.getElementById('mobile-prev-label').textContent = 'Previous';
+                document.getElementById('mobile-next-label').textContent = 'Next';
+                
                 return;
             }
 
@@ -611,28 +677,36 @@ int main() {
          */
         function updateNavigation() {
             const currentIndex = solutionOrder.indexOf(currentSolutionId);
+            
             const prevBtn = document.getElementById('prev-solution-btn');
             const nextBtn = document.getElementById('next-solution-btn');
             const prevLabel = document.getElementById('prev-label');
             const nextLabel = document.getElementById('next-label');
 
-            // --- Previous Button Logic ---
-            if (currentIndex > 0) {
-                prevBtn.disabled = false;
-                prevLabel.textContent = `Prev (${solutionOrder[currentIndex - 1]})`;
-            } else {
-                prevBtn.disabled = true;
-                prevLabel.textContent = 'Previous';
-            }
+            const mPrevBtn = document.getElementById('mobile-prev-solution-btn');
+            const mNextBtn = document.getElementById('mobile-next-solution-btn');
+            const mPrevLabel = document.getElementById('mobile-prev-label');
+            const mNextLabel = document.getElementById('mobile-next-label');
 
-            // --- Next Button Logic ---
-            if (currentIndex < solutionOrder.length - 1) {
-                nextBtn.disabled = false;
-                nextLabel.textContent = `Next (${solutionOrder[currentIndex + 1]})`;
-            } else {
-                nextBtn.disabled = true;
-                nextLabel.textContent = 'Next';
-            }
+            // --- Previous Button Logic (Desktop & Mobile) ---
+            const prevEnabled = currentIndex > 0;
+            const prevId = prevEnabled ? solutionOrder[currentIndex - 1] : '';
+
+            prevBtn.disabled = !prevEnabled;
+            prevLabel.textContent = prevEnabled ? `Prev (${prevId})` : 'Previous';
+
+            mPrevBtn.disabled = !prevEnabled;
+            mPrevLabel.textContent = prevEnabled ? `Prev (${prevId})` : 'Previous';
+
+            // --- Next Button Logic (Desktop & Mobile) ---
+            const nextEnabled = currentIndex < solutionOrder.length - 1;
+            const nextId = nextEnabled ? solutionOrder[currentIndex + 1] : '';
+
+            nextBtn.disabled = !nextEnabled;
+            nextLabel.textContent = nextEnabled ? `Next (${nextId})` : 'Next';
+            
+            mNextBtn.disabled = !nextEnabled;
+            mNextLabel.textContent = nextEnabled ? `Next (${nextId})` : 'Next';
         }
         
         /**
@@ -673,8 +747,51 @@ int main() {
             }, 1500);
         }
 
+        // --- NEW MOBILE FEATURE: Hamburger Menu Logic ---
+        function toggleMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.toggle('hidden');
+        }
+
+        function closeMobileMenu() {
+            const menu = document.getElementById('mobile-menu');
+            menu.classList.add('hidden');
+        }
+
+        // --- NEW MOBILE FEATURE: Scroll to Top Logic ---
+        function setupScrollToTopButton() {
+            const button = document.getElementById('scroll-to-top');
+            if (!button) return;
+
+            window.addEventListener('scroll', () => {
+                // Show/hide button based on scroll position
+                if (window.scrollY > 300) { 
+                    button.classList.remove('hidden');
+                    // Use a slight delay for the opacity transition to work after removing 'hidden'
+                    setTimeout(() => button.classList.add('opacity-100'), 10);
+                } else {
+                    button.classList.remove('opacity-100');
+                    setTimeout(() => button.classList.add('hidden'), 300); 
+                }
+            });
+
+            button.addEventListener('click', () => {
+                window.scrollTo({
+                    top: 0,
+                    behavior: 'smooth'
+                });
+            });
+        }
+
+
         // --- Initialization ---
         window.onload = function() {
+            // Mobile menu listener
+            document.getElementById('mobile-menu-button')?.addEventListener('click', toggleMobileMenu);
+
+            // Setup scroll to top
+            setupScrollToTopButton();
+            
             // Check for initial hash and show the solution
             showSolution(window.location.hash);
             
